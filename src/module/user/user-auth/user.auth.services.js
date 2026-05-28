@@ -13,10 +13,10 @@ export const signupService = async (data) => {
   const age = new Date(Date.now() - new Date(date_of_birth)).getUTCFullYear() - 1970;
   if (age < 18) throw new Error("You must be at least 18 years old");
 
-  /* ── 2. Duplicate Check — parallel ── */
+  /* ── 2. Duplicate Check —  */
   const [[[emailUser]], [[mobileUser]]] = await Promise.all([
-    db.execute(`SELECT id, account_status FROM users WHERE email = ?`,  [email]),      // ✅ db not pool
-    db.execute(`SELECT id, account_status FROM users WHERE mobile = ?`, [normalizedMobile]), // ✅ db not pool
+    db.execute(`SELECT id, account_status FROM users WHERE email = ?`,  [email]),      
+    db.execute(`SELECT id, account_status FROM users WHERE mobile = ?`, [normalizedMobile]), 
   ]);
 
   if (emailUser) {
